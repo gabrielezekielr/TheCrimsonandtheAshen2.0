@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Crimson and The Ashen</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #0b0b0f;
+            --panel: #111116;
+            --crimson: crimson;
+            --accent: #d34b65;
+            --border: #302027;
+            --muted: #aaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: white;
+            font-family: Georgia, serif;
+        }
+
+
+/* TOP NAVIGATION */
+nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 22px 15px;
+    background: #08080b;
+    border-bottom: 1px solid var(--border);
+}
+
+nav a {
+    color: #d9cdd0;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    transition: color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+nav a:hover,
+nav a:focus-visible,
+nav a.active,
+nav a.selected {
+    color: var(--crimson);
+}
+
+/* MOBILE NAVIGATION */
+@media (max-width: 480px) {
+    nav {
+        gap: 18px;
+    }
+
+    nav a {
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+}
+
+
+        /* HOMEPAGE */
+        #home {
+            text-align: center;
+            padding: 110px 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        #home .home-logo {
+            display: block;
+            width: 100%;
+            max-width: 650px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        #home > p {
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        /* HOMEPAGE SIBLING DIALOGUE */
+        .dialogue-slideshow {
+            min-height: 58px;
+            margin: 42px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+        }
+
+        .dialogue-line {
+            margin: 0;
+            color: #d8c7ce;
+            font-size: clamp(16px, 2.2vw, 21px);
+            font-style: italic;
+            letter-spacing: 0.5px;
+            line-height: 1.8;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 1.1s ease;
+        }
+
+        .dialogue-line.fading {
+            opacity: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 80px;
+            padding: 20px;
+            color: #777;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* HOMEPAGE ANIMATIONS */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                gap: 20px;
+                padding: 20px 12px;
+            }
+
+            nav a {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+            }
+
+            #home {
+                padding: 85px 18px;
+            }
+
+            footer {
+                margin-top: 50px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .dialogue-slideshow {
+                margin-top: 32px;
+                min-height: 64px;
+            }
+
+            .dialogue-line {
+                max-width: 100%;
+            }
+        }
+
+        /* ==========================================
+           OPENING SCREEN AND CINEMATIC SEQUENCE
+        ========================================== */
+
+        body.intro-playing {
+            overflow: hidden;
+        }
+
+        #site-intro {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #000;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        #site-intro.intro-active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* FIRST SCREEN */
+        #entry-screen {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 35px;
+            padding: 24px;
+            background: var(--background);
+            text-align: center;
+            transition: opacity 0.8s ease,
+                        visibility 0.8s ease;
+        }
+
+        #site-intro.text-stage #entry-screen,
+        #site-intro.logo-stage #entry-screen {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* CINEMATIC TEXT SEQUENCE */
+        #intro-text-stage {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: transparent;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.8s ease,
+                        visibility 0.8s ease;
+        }
+
+        #site-intro.text-stage #intro-text-stage {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .intro-phrase {
+            position: absolute;
+            max-width: 80%;
+            margin: 0;
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: clamp(19px, 3vw, 34px);
+            font-weight: normal;
+            line-height: 1.6;
+            letter-spacing: 1px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease,
+                        visibility 0.8s ease;
+            text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8);
+        }
+
+        .intro-phrase.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* FIRST PHRASE */
+        #intro-phrase-one {
+            top: 27%;
+            left: 8%;
+            text-align: left;
+        }
+
+        /* SECOND PHRASE */
+        #intro-phrase-two {
+            right: 8%;
+            bottom: 24%;
+            text-align: right;
+        }
+
+        /* FINAL PHRASE */
+        #intro-phrase-three {
+            top: 50%;
+            left: 50%;
+            width: max-content;
+            max-width: 90%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ENTER BUTTON */
+        #enter-button {
+            border: none;
+            background: transparent;
+            color: #eee;
+            font-family: Georgia, serif;
+            font-size: clamp(16px, 3vw, 23px);
+            letter-spacing: 3px;
+            line-height: 1.8;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        #enter-button:hover {
+            color: var(--accent);
+        }
+
+        #enter-button:focus-visible,
+        .music-choice button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 6px;
+        }
+
+        /* MUSIC CHOICE */
+        .music-choice {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .music-choice p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        .music-choice-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .music-choice button {
+            width: 54px;
+            height: 46px;
+            border: 1px solid #49232e;
+            background: #111116;
+            color: #aaa;
+            font-family: Georgia, serif;
+            font-size: 21px;
+            cursor: pointer;
+            transition: color 0.25s ease,
+                        background 0.25s ease,
+                        border-color 0.25s ease;
+        }
+
+        .music-choice button:hover,
+        .music-choice button.selected {
+            border-color: var(--accent);
+            background: #29121b;
+            color: #fff;
+        }
+
+        .music-choice button.selected {
+            box-shadow: 0 0 14px rgba(211, 75, 101, 0.15);
+        }
+
+        /* LOGO REVEAL */
+        #intro-logo-stage {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            background: #000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s ease,
+                        visibility 1.2s ease;
+        }
+
+        #site-intro.logo-stage #intro-logo-stage {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #intro-logo {
+            display: block;
+            width: min(90vw, 1100px);
+            max-height: 80vh;
+            object-fit: contain;
+            opacity: 0;
+            transform: scale(0.96);
+            transition: opacity 1.4s ease,
+                        transform 1.4s ease;
+        }
+
+        #site-intro.logo-stage #intro-logo {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        @media (max-width: 600px) {
+            .intro-phrase {
+                max-width: 84%;
+                font-size: clamp(17px, 4.5vw, 25px);
+                letter-spacing: 0.5px;
+            }
+
+            #intro-phrase-one {
+                top: 29%;
+                left: 7%;
+            }
+
+            #intro-phrase-two {
+                right: 7%;
+                bottom: 26%;
+            }
+
+            #intro-logo-stage {
+                padding: 18px;
+            }
+
+            #intro-logo {
+                width: 96vw;
+                max-height: 75vh;
+            }
+
+            #enter-button {
+                letter-spacing: 2px;
+            }
+        }
+
+        /* REDUCED-MOTION ACCESSIBILITY */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- OPENING SCREEN -->
+    <div id="site-intro" class="intro-active">
+
+        <!-- FIRST SCREEN -->
+        <div id="entry-screen">
+            <button id="enter-button" type="button">
+                PRESS ANYWHERE TO ENTER
+            </button>
+
+            <div class="music-choice" id="music-choice">
+                <p>ALLOW MUSIC?</p>
+
+                <div class="music-choice-buttons">
+                    <button
+                        id="music-no"
+                        type="button"
+                        aria-label="Enter without music"
+                        aria-pressed="true"
+                        class="selected"
+                    >✕</button>
+
+                    <button
+                        id="music-yes"
+                        type="button"
+                        aria-label="Allow music"
+                        aria-pressed="false"
+                    >✓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CINEMATIC TEXT SEQUENCE -->
+        <div id="intro-text-stage" aria-live="off">
+            <p class="intro-phrase" id="intro-phrase-one">
+                Countless Wars Happened
+            </p>
+
+            <p class="intro-phrase" id="intro-phrase-two">
+                Until the two Reunited
+            </p>
+
+            <p class="intro-phrase" id="intro-phrase-three">
+                They're Known as
+            </p>
+        </div>
+
+        <!-- LOGO REVEAL -->
+        <div id="intro-logo-stage">
+            <img
+                id="intro-logo"
+                src="TheCrimsonandtheAshen.jpg"
+                alt="The Crimson and the Ashen"
+            >
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION TO THE FOUR SEPARATE PAGES -->
+    <nav aria-label="Main navigation">
+        <a href="characters.html">CHARACTERS</a>
+        <a href="world.html">WORLD</a>
+        <a href="expansions.html">EXPANSIONS</a>
+        <a href="others.html">OTHERS</a>
+    </nav>
+
+    <!-- HOMEPAGE CONTENT -->
+    <main id="home">
+        <img
+            src="crimsonandtheashenpngver.png"
+            alt="The Crimson and The Ashen"
+            class="home-logo"
+        >
+
+        <p>Feel free to check the information.</p>
+
+        <!-- JIN AND RIN DIALOGUE SLIDESHOW -->
+        <div class="dialogue-slideshow">
+            <p
+                class="dialogue-line"
+                id="sibling-dialogue"
+                aria-live="polite"
+            >
+                Wait for me, little sis...
+            </p>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Rivero, Gabriel Ezekiel</p>
+    </footer>
+
+    <!-- BACKGROUND MUSIC -->
+    <audio id="backgroundMusic" loop preload="metadata">
+        <source
+            src="The%20World%20we%20Could%20not%20Save.mp3"
+            type="audio/mpeg"
+        >
+        Your browser does not support audio playback.
+    </audio>
+
+    <script>
+        // ==========================================
+        // JIN AND RIN HOMEPAGE DIALOGUE SLIDESHOW
+        // ==========================================
+
+        const siblingDialogue =
+            document.getElementById("sibling-dialogue");
+
+        const siblingDialogueLines = [
+            "Wait for me, little sis...",
+            "Brother! I found you..."
+        ];
+
+        let currentDialogue = 0;
+
+        window.setInterval(function() {
+            siblingDialogue.classList.add("fading");
+
+            window.setTimeout(function() {
+                currentDialogue =
+                    (currentDialogue + 1) %
+                    siblingDialogueLines.length;
+
+                siblingDialogue.textContent =
+                    siblingDialogueLines[currentDialogue];
+
+                siblingDialogue.classList.remove("fading");
+            }, 1150);
+
+        }, 4500);
+
+
+        // ==========================================
+        // BACKGROUND MUSIC
+        // AND OPENING CINEMATIC
+        // ==========================================
+
+        const backgroundMusic =
+            document.getElementById("backgroundMusic");
+
+        (function setupOpeningIntro() {
+            const intro =
+                document.getElementById("site-intro");
+
+            const entryScreen =
+                document.getElementById("entry-screen");
+
+            const musicChoice =
+                document.getElementById("music-choice");
+
+            const musicNo =
+                document.getElementById("music-no");
+
+            const musicYes =
+                document.getElementById("music-yes");
+
+            const enterButton =
+                document.getElementById("enter-button");
+
+            const phrases = [
+                document.getElementById("intro-phrase-one"),
+                document.getElementById("intro-phrase-two"),
+                document.getElementById("intro-phrase-three")
+            ];
+
+            if (
+                !intro ||
+                !entryScreen ||
+                !musicChoice ||
+                !musicNo ||
+                !musicYes ||
+                !enterButton ||
+                !backgroundMusic ||
+                phrases.some(function(phrase) {
+                    return !phrase;
+                })
+            ) {
+                console.warn(
+                    "Opening screen elements were not found."
+                );
+                return;
+            }
+
+            document.body.classList.add("intro-playing");
+
+            let allowMusic = false;
+            let entered = false;
+
+            function selectMusicChoice(allow) {
+                allowMusic = allow;
+
+                musicNo.classList.toggle("selected", !allow);
+                musicYes.classList.toggle("selected", allow);
+
+                musicNo.setAttribute(
+                    "aria-pressed",
+                    String(!allow)
+                );
+
+                musicYes.setAttribute(
+                    "aria-pressed",
+                    String(allow)
+                );
+            }
+
+            musicNo.addEventListener("click", function(event) {
+                event.stopPropagation();
+                selectMusicChoice(false);
+            });
+
+            musicYes.addEventListener("click", function(event) {
+                event.stopPropagation();
+                selectMusicChoice(true);
+            });
+
+            function finishIntro() {
+                intro.style.opacity = "0";
+                intro.style.visibility = "hidden";
+
+                document.body.classList.remove("intro-playing");
+
+                window.setTimeout(function() {
+                    intro.remove();
+                }, 1100);
+            }
+
+            function showLogo() {
+                intro.classList.remove("text-stage");
+                intro.classList.add("logo-stage");
+
+                // Allow the title image its own moment.
+                window.setTimeout(finishIntro, 3800);
+            }
+
+            function showPhrase(index) {
+                phrases[index].classList.add("is-visible");
+
+                // Fade in, then display the phrase.
+                window.setTimeout(function() {
+                    if (index < phrases.length - 1) {
+                        phrases[index].classList.remove(
+                            "is-visible"
+                        );
+
+                        showPhrase(index + 1);
+                    } else {
+                        // The final phrase fades before the logo.
+                        phrases[index].classList.remove(
+                            "is-visible"
+                        );
+
+                        showLogo();
+                    }
+                }, 2800);
+            }
+
+            function enterSite() {
+                if (entered) return;
+
+                entered = true;
+
+                if (allowMusic) {
+                    const playback = backgroundMusic.play();
+
+                    if (
+                        playback &&
+                        typeof playback.catch === "function"
+                    ) {
+                        playback.catch(function(error) {
+                            console.warn(
+                                "Background music could not start.",
+                                error
+                            );
+                        });
+                    }
+                } else {
+                    backgroundMusic.pause();
+                }
+
+                intro.classList.add("text-stage");
+                showPhrase(0);
+            }
+
+            entryScreen.addEventListener(
+                "click",
+                function(event) {
+                    if (event.target.closest("#music-choice")) {
+                        return;
+                    }
+
+                    enterSite();
+                }
+            );
+
+            enterButton.addEventListener(
+                "click",
+                enterSite
+            );
+
+            selectMusicChoice(false);
+        })();
+    </script>
+
+</body>
+</html>

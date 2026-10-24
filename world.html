@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>World | The Crimson and The Ashen</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #0b0b0f;
+            --panel: #111116;
+            --crimson: crimson;
+            --accent: #d34b65;
+            --border: #302027;
+            --muted: #aaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: white;
+            font-family: Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+/* TOP NAVIGATION */
+nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 22px 15px;
+    background: #08080b;
+    border-bottom: 1px solid var(--border);
+}
+
+nav a {
+    color: #d9cdd0;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    transition: color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+nav a:hover,
+nav a:focus-visible,
+nav a.active,
+nav a.selected {
+    color: var(--crimson);
+}
+
+/* MOBILE NAVIGATION */
+@media (max-width: 480px) {
+    nav {
+        gap: 18px;
+    }
+
+    nav a {
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+}
+
+        /* WORLD SECTION */
+        #world {
+            flex: 1;
+            padding: 45px 25px;
+            animation: fadeSlideIn 0.6s ease both;
+        }
+
+        .section-heading {
+            text-align: center;
+            letter-spacing: 4px;
+            margin: 0 0 35px;
+        }
+
+        /* WORLD INTRODUCTION */
+        .world-placeholder {
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 65px 30px;
+            text-align: center;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .world-label {
+            color: #e8758c;
+            font-size: 12px;
+            letter-spacing: 5px;
+        }
+
+        .world-placeholder h3 {
+            margin: 25px 0;
+            font-size: clamp(20px, 4vw, 32px);
+            font-weight: normal;
+            letter-spacing: 3px;
+            line-height: 1.6;
+        }
+
+        .world-divider {
+            width: 100px;
+            height: 2px;
+            margin: 25px auto;
+            background: crimson;
+        }
+
+        .world-message {
+            max-width: 520px;
+            margin: 0 auto;
+            color: #aaa;
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .world-coming-soon {
+            margin-top: 35px;
+            color: #d34b65;
+            font-size: 11px;
+            letter-spacing: 2px;
+            line-height: 1.8;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            color: #777;
+            text-align: center;
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* TABLET AND MOBILE */
+        @media (max-width: 700px) {
+            nav {
+                gap: 20px;
+                padding: 20px 12px;
+            }
+
+            nav a {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+            }
+
+            #world {
+                padding: 30px 18px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .world-placeholder {
+                margin: 30px auto;
+                padding: 45px 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP NAVIGATION -->
+    <nav>
+        <a href="crimsonandashen.html">HOME</a>
+        <a href="characters.html">CHARACTERS</a>
+        <a href="world.html" class="selected" aria-current="page">WORLD</a>
+        <a href="expansions.html">EXPANSIONS</a>
+        <a href="others.html">OTHERS</a>
+    </nav>
+
+    <!-- WORLD CONTENT -->
+    <main id="world">
+
+        <h2 class="section-heading">THE WORLD</h2>
+
+        <div class="world-placeholder">
+            <p class="world-label">THE WORLD OF</p>
+
+            <h3>THE CRIMSON AND THE ASHEN</h3>
+
+            <div class="world-divider"></div>
+
+            <p class="world-message">
+                The nations, territories, and mysteries of this world
+                will be revealed here.
+            </p>
+
+            <p class="world-coming-soon">
+                THE WORLD'S ARTWORK ARE YET TO BE CREATED — COMING SOON
+            </p>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Rivero, Gabriel Ezekiel</p>
+    </footer>
+
+</body>
+</html>

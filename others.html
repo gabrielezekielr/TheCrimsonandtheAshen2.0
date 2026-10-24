@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Others | The Crimson and The Ashen</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #0b0b0f;
+            --panel: #111116;
+            --crimson: crimson;
+            --accent: #d34b65;
+            --border: #302027;
+            --muted: #aaa;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: white;
+            font-family: Georgia, serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+ 
+/* TOP NAVIGATION */
+nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 22px 15px;
+    background: #08080b;
+    border-bottom: 1px solid var(--border);
+}
+
+nav a {
+    color: #d9cdd0;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    transition: color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+nav a:hover,
+nav a:focus-visible,
+nav a.active,
+nav a.selected {
+    color: var(--crimson);
+}
+
+/* MOBILE NAVIGATION */
+@media (max-width: 480px) {
+    nav {
+        gap: 18px;
+    }
+
+    nav a {
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+}
+
+
+        /* SECTION HEADING */
+        .section-heading {
+            text-align: center;
+            letter-spacing: 4px;
+            margin: 0 0 35px;
+        }
+
+        /* OTHERS SECTION */
+        #others {
+            display: block;
+            padding: 45px 25px;
+            flex: 1;
+            animation: fadeSlideIn 0.6s ease both;
+        }
+
+        .others-intro {
+            max-width: 750px;
+            margin: 0 auto 45px;
+            text-align: center;
+        }
+
+        .others-intro p {
+            color: #aaa;
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        /* THREE MAIN OPTIONS */
+        .others-menu {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .others-card {
+            position: relative;
+            min-height: 230px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 30px 20px;
+            overflow: hidden;
+
+            border: 1px solid #49232e;
+            background: linear-gradient(
+                145deg,
+                rgba(75, 24, 39, 0.28),
+                rgba(17, 17, 22, 0.98) 65%
+            );
+
+            color: white;
+            font-family: Georgia, serif;
+            text-align: center;
+            cursor: pointer;
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .others-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background: crimson;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .others-card:hover {
+            transform: translateY(-7px);
+            border-color: #b33b55;
+            box-shadow: 0 12px 35px rgba(120, 15, 40, 0.15);
+        }
+
+        .others-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .others-card:focus-visible,
+        .others-back-button:focus-visible {
+            outline: 2px solid #e8758c;
+            outline-offset: 4px;
+        }
+
+        .others-card-icon {
+            color: #e8758c;
+            font-size: 34px;
+            line-height: 1;
+        }
+
+        .others-card h3 {
+            margin: 0;
+            color: #f0dce1;
+            font-size: 17px;
+            font-weight: normal;
+            letter-spacing: 2px;
+            line-height: 1.6;
+        }
+
+        .others-card p {
+            max-width: 270px;
+            margin: 0;
+            color: #aaa;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* INDIVIDUAL OTHERS PAGES */
+        .others-subpage {
+            display: none;
+            max-width: 900px;
+            min-height: 350px;
+            margin: 0 auto;
+            padding: 35px clamp(20px, 5vw, 55px);
+            border: 1px solid #302027;
+            background: #111116;
+        }
+
+        .others-subpage.active {
+            display: block;
+            animation: fadeSlideIn 0.4s ease both;
+        }
+
+        .others-subpage h3 {
+            color: #e8758c;
+            font-size: clamp(21px, 4vw, 30px);
+            font-weight: normal;
+            letter-spacing: 2px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .others-subpage p {
+            color: #bcbcc2;
+            font-size: 15px;
+            line-height: 2;
+        }
+
+        .others-divider {
+            width: 75px;
+            height: 2px;
+            margin: 25px auto 35px;
+            background: crimson;
+        }
+
+        .others-back-button {
+            display: block;
+            margin: 0 auto 30px;
+            padding: 11px 18px;
+            border: 1px solid #673044;
+            background: #171116;
+            color: #eee;
+            font-family: Georgia, serif;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background 0.25s, border-color 0.25s;
+        }
+
+        .others-back-button:hover {
+            background: #451525;
+            border-color: crimson;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            color: #777;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* TABLET */
+        @media (max-width: 850px) {
+            .others-menu {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 700px) {
+            nav {
+                gap: 20px;
+                padding: 20px 12px;
+            }
+
+            nav a {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            #others {
+                padding: 30px 18px;
+            }
+
+            .others-menu {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 16px;
+            }
+
+            .others-card {
+                min-height: 190px;
+            }
+
+            .others-subpage {
+                padding: 25px 18px;
+            }
+        }
+
+        /* REDUCED MOTION */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP NAVIGATION -->
+    <nav aria-label="Main navigation">
+        <a href="crimsonandashen.html">HOME</a>
+        <a href="characters.html">CHARACTERS</a>
+        <a href="world.html">WORLD</a>
+        <a href="expansions.html">EXPANSIONS</a>
+        <a href="others.html" class="selected" aria-current="page">
+            OTHERS
+        </a>
+    </nav>
+
+    <main>
+        <section id="others">
+
+            <h2 class="section-heading">OTHERS</h2>
+
+            <!-- INTRODUCTION -->
+            <div class="others-intro" id="others-intro">
+                <p>
+                    Discover the stories, words, and creative history
+                    behind The Crimson and the Ashen.
+                </p>
+            </div>
+
+            <!-- THREE MAIN OPTIONS -->
+            <div class="others-menu" id="others-menu">
+
+                <button
+                    class="others-card"
+                    type="button"
+                    data-others-page="lore"
+                    aria-controls="lore-page"
+                >
+                    <span class="others-card-icon" aria-hidden="true">
+                        ⌘
+                    </span>
+                    <h3>LORE ARCHIVES</h3>
+                    <p>
+                        Explore the history, mysteries, and records
+                        of this world.
+                    </p>
+                </button>
+
+                <button
+                    class="others-card"
+                    type="button"
+                    data-others-page="quotes"
+                    aria-controls="quotes-page"
+                >
+                    <span class="others-card-icon" aria-hidden="true">
+                        “ ”
+                    </span>
+                    <h3>CHARACTER QUOTES</h3>
+                    <p>
+                        Discover the words and memorable lines
+                        of the characters.
+                    </p>
+                </button>
+
+                <button
+                    class="others-card"
+                    type="button"
+                    data-others-page="creator"
+                    aria-controls="creator-page"
+                >
+                    <span class="others-card-icon" aria-hidden="true">
+                        ✦
+                    </span>
+                    <h3>CREATOR'S NOTES</h3>
+                    <p>
+                        Explore the inspiration and development
+                        behind the story.
+                    </p>
+                </button>
+
+            </div>
+
+            <!-- LORE ARCHIVES -->
+            <div class="others-subpage" id="lore-page">
+
+                <button class="others-back-button" type="button">
+                    &larr; BACK TO OTHERS
+                </button>
+
+                <h3>LORE ARCHIVES</h3>
+                <div class="others-divider"></div>
+
+                <p>
+                    Enter the archives of The Crimson and the Ashen.
+                    This section will preserve the world's history,
+                    important events, and hidden truths.
+                </p>
+
+                <p>
+                    More records will be added as the lore develops.
+                </p>
+
+            </div>
+
+            <!-- CHARACTER QUOTES -->
+            <div class="others-subpage" id="quotes-page">
+
+                <button class="others-back-button" type="button">
+                    &larr; BACK TO OTHERS
+                </button>
+
+                <h3>CHARACTER QUOTES</h3>
+                <div class="others-divider"></div>
+
+                <p>
+                    Every character has words worth remembering.
+                    This section will collect their memorable quotes
+                    and dialogue throughout the story.
+                </p>
+
+                <p>
+                    Character quotes will be added here.
+                </p>
+
+            </div>
+
+            <!-- CREATOR'S NOTES -->
+            <div class="others-subpage" id="creator-page">
+
+                <button class="others-back-button" type="button">
+                    &larr; BACK TO OTHERS
+                </button>
+
+                <h3>CREATOR'S NOTES</h3>
+                <div class="others-divider"></div>
+
+                <p>
+                    Welcome to the behind-the-scenes corner of
+                    The Crimson and the Ashen.
+                </p>
+
+                <p>
+                    This section will share the story's development,
+                    character inspirations, and other details about
+                    its creation.
+                </p>
+
+            </div>
+
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Rivero, Gabriel Ezekiel</p>
+    </footer>
+
+    <script>
+        const othersMenu = document.getElementById("others-menu");
+        const othersIntro = document.getElementById("others-intro");
+
+        const othersPages = {
+            lore: document.getElementById("lore-page"),
+            quotes: document.getElementById("quotes-page"),
+            creator: document.getElementById("creator-page")
+        };
+
+        // RETURN TO THE THREE MAIN OPTIONS
+        function showOthersMenu() {
+            Object.values(othersPages).forEach(function(page) {
+                page.classList.remove("active");
+            });
+
+            othersMenu.style.display = "grid";
+            othersIntro.style.display = "block";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        // OPEN A SELECTED SUBPAGE
+        function showOthersPage(pageName) {
+            if (!othersPages[pageName]) return;
+
+            othersMenu.style.display = "none";
+            othersIntro.style.display = "none";
+
+            Object.keys(othersPages).forEach(function(key) {
+                othersPages[key].classList.toggle(
+                    "active",
+                    key === pageName
+                );
+            });
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        // CARD BUTTONS
+        document.querySelectorAll("[data-others-page]").forEach(
+            function(button) {
+                button.addEventListener("click", function() {
+                    showOthersPage(button.dataset.othersPage);
+                });
+            }
+        );
+
+        // BACK BUTTONS
+        document.querySelectorAll(".others-back-button").forEach(
+            function(button) {
+                button.addEventListener("click", showOthersMenu);
+            }
+        );
+    </script>
+
+</body>
+</html>
